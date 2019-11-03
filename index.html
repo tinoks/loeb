@@ -1,0 +1,228 @@
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Display a map</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
+	<script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
+
+	<style>
+		*{
+			font-family: monospace;
+			letter-spacing: -1px;
+		}
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+		#drawer {
+			position: fixed;
+			background: white;
+			max-width: 400px;
+			width: 100%;
+			height: 200px;
+			margin: auto;
+			left: 0;
+			right: 0;
+			overflow: auto;
+			bottom: -210px;
+			transition: bottom 0.4s ease-out;
+			z-index:2;
+			padding: 5px;
+		}
+		
+		#drawer.active {
+			bottom: 0;
+		}
+
+		.list {
+			padding-left: 5px;
+		}
+
+		h1{
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<div id='drawer'></div>
+
+<script>
+var spg = [ { "id": 15, "lng": "12,52511412", "lat": "55,66218479", "spørgsmål": "Haft en PUK maxi?", "1": "Dorte", "X": "Lone", "0": "Anne" }, { "id": 1, "lng": "12,52566934", "lat": "55,66092069", "spørgsmål": "Ejet en folkevogn bobbel?", "1": "Grethe", "X": "Mogens", "0": "Sven" }, { "id": 2, "lng": "12,52622724", "lat": "55,660376", "spørgsmål": "Har skudt med AK47?", "1": "Catalina", "X": "Henrik", "0": "Maria" }, { "id": 3, "lng": "12,52650619", "lat": "55,65927451", "spørgsmål": "Har studeret i udlandet?", "1": "Alexander", "X": "Ville", "0": "Line" }, { "id": 4, "lng": "12,52840519", "lat": "55,65945607", "spørgsmål": "Været FDF leder?", "1": "Sven", "X": "Dorte", "0": "Maria" }, { "id": 5, "lng": "12,52878606", "lat": "55,66020654", "spørgsmål": "Arbejdet på et hospital?", "1": "Dorte", "X": "Catalina", "0": "Lis" }, { "id": 6, "lng": "12,52925813", "lat": "55,65983131", "spørgsmål": "Har aldrig kørt med metroen? ", "1": "Bent", "X": "Vitus", "0": "Simon" }, { "id": 7, "lng": "12,52925813", "lat": "55,66047586", "spørgsmål": "Sælger børnetøj?", "1": "Simon", "X": "Maria", "0": "Lis" }, { "id": 8, "lng": "12,5287056", "lat": "55,66179217", "spørgsmål": "Kvart Nordmand? ", "1": "Lucia", "X": "Alexander", "0": "Simon" }, { "id": 9, "lng": "12,52774537", "lat": "55,66182848", "spørgsmål": "Spiller Golf? ", "1": "Lone", "X": "Anne", "0": "Ville" }, { "id": 10, "lng": "12,52673149", "lat": "55,66186177", "spørgsmål": "Aktiv/frivillig i et politisk parti?", "1": "Mogens", "X": "Ebbe", "0": "Henrik" }, { "id": 11, "lng": "12,52701581", "lat": "55,66136248", "spørgsmål": "Har fødselsdag i dag?", "1": "Sven", "X": "Henrik", "0": "Ida" }, { "id": 12, "lng": "12,52606228", "lat": "55,66227178", "spørgsmål": "Har været til DM i skills?", "1": "Sine", "X": "Line", "0": "Anne" } ]
+var points = turf.featureCollection(
+	spg.map(spg=> turf.point(
+			[Number(spg.lng.replace(",",".")),Number(spg.lat.replace(",","."))],
+			spg,
+			{id:spg.id}
+			)
+		)
+	)
+var buffered = turf.buffer(points, 20, {units: 'meters'});
+
+mapboxgl.accessToken = 'pk.eyJ1IjoidGlub2tzIiwiYSI6ImNqbnltYjRpdTAzMHUza3F1ajJ3dTQzMHYifQ.J_urIvKEohiyuVrchF-Eyg';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+    bounds: [12.521821966431759,55.660018883793356,12.526919594464772,55.66268835613852]
+});
+
+const gps = new mapboxgl.GeolocateControl({
+		positionOptions: {
+			enableHighAccuracy: true
+		},
+		fitBoundsOptions:{
+			maxZoom:18
+		},
+		trackUserLocation: true
+	})
+	map.addControl(gps);
+
+	var hoveredStateId = null;
+	gps.on('geolocate', e=> {
+		var position = [e.coords.longitude, e.coords.latitude];
+
+		if (hoveredStateId) map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: false})
+
+		var nearest = turf.nearestPoint(turf.point(position),points)
+		var distance = turf.distance(turf.point(position),nearest, {units: 'meters', steps:360})
+		hoveredStateId = nearest.id
+		if(distance<20) {
+			const markup = `
+				<div class="list">
+					<h2>${nearest.properties.spørgsmål}</h2>
+					<h3>0:${nearest.properties["0"]}</h3>
+					<h3>X:${nearest.properties["x"]}</h3>
+					<h3>1:${nearest.properties["1"]}</h3>
+			 	</div>
+					`;
+			document.querySelector("#drawer").innerHTML = markup
+			map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: true});
+
+			open()
+		}
+		else{ 
+			map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: false});
+
+			close()
+		}
+	});
+
+	map.on('click', e=>{
+		console.log(e)
+		var position = [e.lngLat.lng, e.lngLat.lat];
+
+		if (hoveredStateId) map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: false})
+
+		var nearest = turf.nearestPoint(turf.point(position),points)
+		var distance = turf.distance(turf.point(position),nearest, {units: 'meters', steps:360})
+		hoveredStateId = nearest.id
+		if(distance<20) {
+			const markup = `
+				<div class="list">
+					<h1>${nearest.properties.spørgsmål}</h1>
+					<h2>0:${nearest.properties["0"]}</h2>
+					<h2>X:${nearest.properties["X"]}</h2>
+					<h2>1:${nearest.properties["1"]}</h2>
+			 	</div>
+					`;
+			document.querySelector("#drawer").innerHTML = markup
+			map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: true});
+
+			open()
+		}
+		else{ 
+			map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: false});
+
+			close()
+		}
+		console.log(distance,nearest)
+		
+	})
+
+	//map.on("move", _=> close() )
+	map.on('load', _=> {
+		map.addSource('pointdata',
+			{
+				"type": "geojson",
+				"data": buffered,
+				"generateId": true
+			}
+		)
+		map.addLayer({
+			"id": "points",
+			"type": "fill",
+			"source": 'pointdata',
+			'paint': {
+				'fill-opacity': 0.8,
+				'fill-color': ["case",
+								["boolean", ["feature-state", "within"], false],
+								'#6b9ac3',
+								'#fbb03b'
+							  ]
+			}			
+		});
+		map.addLayer({
+			"id": "points_outline",
+			"type": "line",
+			"source": 'pointdata',
+			'paint': {
+				'line-opacity': 1,
+				'line-color': 'black'
+			}			
+		});
+	})
+	var timer;
+	document.querySelector("#map").addEventListener("contextmenu", e => {
+		if (new Date() - timer < 500) map.zoomOut()
+		timer = new Date()
+		e.preventDefault();
+	});
+
+	close = _ => document.querySelector("#drawer").classList.remove("active")
+	open = _ => document.querySelector("#drawer").classList.add("active")
+
+	map.on('touchstart', function(data) {
+	if (data.points.length == 2) {
+		var diff = Math.abs(data.points[0].y - data.points[1].y);
+		if (diff <= 50) {
+			data.originalEvent.preventDefault();   //prevent browser refresh on pull down
+			self.map.touchZoomRotate.disable();    //disable native touch controls
+			self.map.dragPan.disable();
+			self.dpPoint = data.point;
+			self.dpPitch = self.map.getPitch();
+		}
+	}
+	});
+
+	map.on('touchmove', function(data) {
+	if (self.dpPoint) {
+		data.preventDefault(); 
+		data.originalEvent.preventDefault();
+		var diff = (self.dpPoint.y - data.point.y) * 0.5;
+		self.map.setPitch(self.dpPitch + diff);
+	}
+	});
+
+	map.on('touchend', function(data) {
+		if (self.dpPoint){
+		self.map.touchZoomRotate.enable();
+		self.map.dragPan.enable();
+	}
+	self.dpPoint = null;
+	});
+
+	map.on('touchcancel', function(data) {   
+	if (self.dpPoint){
+		self.map.touchZoomRotate.enable();
+		self.map.dragPan.enable();
+	}
+	self.dpPoint = null;
+	}); 
+
+</script>
+
+</body>
+</html>

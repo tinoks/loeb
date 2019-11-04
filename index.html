@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Display a map</title>
+    <title>Barnedåbs Løb</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
@@ -51,7 +51,7 @@
 <div id='drawer'></div>
 
 <script>
-var spg = [ { "id": 15, "lng": "12,52511412", "lat": "55,66218479", "spørgsmål": "Haft en PUK maxi?", "1": "Dorte", "X": "Lone", "0": "Anne" }, { "id": 1, "lng": "12,52566934", "lat": "55,66092069", "spørgsmål": "Ejet en folkevogn bobbel?", "1": "Grethe", "X": "Mogens", "0": "Sven" }, { "id": 2, "lng": "12,52622724", "lat": "55,660376", "spørgsmål": "Har skudt med AK47?", "1": "Catalina", "X": "Henrik", "0": "Maria" }, { "id": 3, "lng": "12,52650619", "lat": "55,65927451", "spørgsmål": "Har studeret i udlandet?", "1": "Alexander", "X": "Ville", "0": "Line" }, { "id": 4, "lng": "12,52840519", "lat": "55,65945607", "spørgsmål": "Været FDF leder?", "1": "Sven", "X": "Dorte", "0": "Maria" }, { "id": 5, "lng": "12,52878606", "lat": "55,66020654", "spørgsmål": "Arbejdet på et hospital?", "1": "Dorte", "X": "Catalina", "0": "Lis" }, { "id": 6, "lng": "12,52925813", "lat": "55,65983131", "spørgsmål": "Har aldrig kørt med metroen? ", "1": "Bent", "X": "Vitus", "0": "Simon" }, { "id": 7, "lng": "12,52925813", "lat": "55,66047586", "spørgsmål": "Sælger børnetøj?", "1": "Simon", "X": "Maria", "0": "Lis" }, { "id": 8, "lng": "12,5287056", "lat": "55,66179217", "spørgsmål": "Kvart Nordmand? ", "1": "Lucia", "X": "Alexander", "0": "Simon" }, { "id": 9, "lng": "12,52774537", "lat": "55,66182848", "spørgsmål": "Spiller Golf? ", "1": "Lone", "X": "Anne", "0": "Ville" }, { "id": 10, "lng": "12,52673149", "lat": "55,66186177", "spørgsmål": "Aktiv/frivillig i et politisk parti?", "1": "Mogens", "X": "Ebbe", "0": "Henrik" }, { "id": 11, "lng": "12,52701581", "lat": "55,66136248", "spørgsmål": "Har fødselsdag i dag?", "1": "Sven", "X": "Henrik", "0": "Ida" }, { "id": 12, "lng": "12,52606228", "lat": "55,66227178", "spørgsmål": "Har været til DM i skills?", "1": "Sine", "X": "Line", "0": "Anne" } ]
+var spg = [ { "lng": "12,52511412", "lat": "55,66218479", "spørgsmål": "Haft en PUK maxi?", "1": "Dorte", "X": "Lone", "0": "Anne" }, { "id": 1, "lng": "12,52566934", "lat": "55,66092069", "spørgsmål": "Ejet en folkevogn bobbel?", "1": "Grethe", "X": "Mogens", "0": "Sven" }, { "id": 2, "lng": "12,52622724", "lat": "55,660376", "spørgsmål": "Har skudt med AK47?", "1": "Catalina", "X": "Henrik", "0": "Maria" }, { "id": 3, "lng": "12,52650619", "lat": "55,65927451", "spørgsmål": "Har studeret i udlandet?", "1": "Alexander", "X": "Ville", "0": "Line" }, { "id": 4, "lng": "12,52840519", "lat": "55,65945607", "spørgsmål": "Været FDF leder?", "1": "Sven", "X": "Dorte", "0": "Maria" }, { "id": 5, "lng": "12,52878606", "lat": "55,66020654", "spørgsmål": "Arbejdet på et hospital?", "1": "Dorte", "X": "Catalina", "0": "Lis" }, { "id": 6, "lng": "12,52925813", "lat": "55,65983131", "spørgsmål": "Har aldrig kørt med metroen? ", "1": "Bent", "X": "Vitus", "0": "Simon" }, { "id": 7, "lng": "12,52925813", "lat": "55,66047586", "spørgsmål": "Sælger børnetøj?", "1": "Simon", "X": "Maria", "0": "Lis" }, { "id": 8, "lng": "12,5287056", "lat": "55,66179217", "spørgsmål": "Kvart Nordmand? ", "1": "Lucia", "X": "Alexander", "0": "Simon" }, { "id": 9, "lng": "12,52774537", "lat": "55,66182848", "spørgsmål": "Spiller Golf? ", "1": "Lone", "X": "Anne", "0": "Ville" }, { "id": 10, "lng": "12,52673149", "lat": "55,66186177", "spørgsmål": "Aktiv/frivillig i et politisk parti?", "1": "Mogens", "X": "Ebbe", "0": "Henrik" }, { "id": 11, "lng": "12,52701581", "lat": "55,66136248", "spørgsmål": "Har fødselsdag i dag?", "1": "Sven", "X": "Henrik", "0": "Ida" }, { "id": 12, "lng": "12,52606228", "lat": "55,66227178", "spørgsmål": "Har været til DM i skills?", "1": "Sine", "X": "Line", "0": "Anne" } ]
 var points = turf.featureCollection(
 	spg.map(spg=> turf.point(
 			[Number(spg.lng.replace(",",".")),Number(spg.lat.replace(",","."))],
@@ -81,66 +81,8 @@ const gps = new mapboxgl.GeolocateControl({
 	map.addControl(gps);
 
 	var hoveredStateId = null;
-	gps.on('geolocate', e=> {
-		var position = [e.coords.longitude, e.coords.latitude];
-
-		if (hoveredStateId) map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: false})
-
-		var nearest = turf.nearestPoint(turf.point(position),points)
-		var distance = turf.distance(turf.point(position),nearest, {units: 'meters', steps:360})
-		hoveredStateId = nearest.id
-		if(distance<20) {
-			const markup = `
-				<div class="list">
-					<h2>${nearest.properties.spørgsmål}</h2>
-					<h3>0:${nearest.properties["0"]}</h3>
-					<h3>X:${nearest.properties["x"]}</h3>
-					<h3>1:${nearest.properties["1"]}</h3>
-			 	</div>
-					`;
-			document.querySelector("#drawer").innerHTML = markup
-			map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: true});
-
-			open()
-		}
-		else{ 
-			map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: false});
-
-			close()
-		}
-	});
-
-	map.on('click', e=>{
-		console.log(e)
-		var position = [e.lngLat.lng, e.lngLat.lat];
-
-		if (hoveredStateId) map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: false})
-
-		var nearest = turf.nearestPoint(turf.point(position),points)
-		var distance = turf.distance(turf.point(position),nearest, {units: 'meters', steps:360})
-		hoveredStateId = nearest.id
-		if(distance<20) {
-			const markup = `
-				<div class="list">
-					<h1>${nearest.properties.spørgsmål}</h1>
-					<h2>0:${nearest.properties["0"]}</h2>
-					<h2>X:${nearest.properties["X"]}</h2>
-					<h2>1:${nearest.properties["1"]}</h2>
-			 	</div>
-					`;
-			document.querySelector("#drawer").innerHTML = markup
-			map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: true});
-
-			open()
-		}
-		else{ 
-			map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: false});
-
-			close()
-		}
-		console.log(distance,nearest)
-		
-	})
+	gps.on('geolocate', e=> showDialog([e.coords.longitude, e.coords.latitude]) );
+	map.on('click', e=>showDialog([e.lngLat.lng, e.lngLat.lat]) )
 
 	//map.on("move", _=> close() )
 	map.on('load', _=> {
@@ -174,6 +116,35 @@ const gps = new mapboxgl.GeolocateControl({
 			}			
 		});
 	})
+	const showDialog = position => {
+
+		if(hoveredStateId!=null) map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: false})
+
+		var nearest = turf.nearestPoint(turf.point(position),points)
+		var distance = turf.distance(turf.point(position),nearest, {units: 'meters', steps:360})
+		hoveredStateId = typeof(nearest.id)=="undefined"?0:nearest.id;
+		if(distance<20) {
+			const markup = `
+				<div class="list">
+					<h1>${nearest.properties.spørgsmål}</h1>
+					<h2>0:${nearest.properties["0"]}</h2>
+					<h2>X:${nearest.properties["X"]}</h2>
+					<h2>1:${nearest.properties["1"]}</h2>
+			 	</div>
+					`;
+			document.querySelector("#drawer").innerHTML = markup
+			map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: true});
+
+			open()
+		}
+		else{ 
+			map.setFeatureState({source: 'pointdata', id: hoveredStateId}, { within: false});
+
+			close()
+		}
+
+
+	}
 	var timer;
 	document.querySelector("#map").addEventListener("contextmenu", e => {
 		if (new Date() - timer < 500) map.zoomOut()

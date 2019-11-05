@@ -6,7 +6,7 @@
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.5.0/mapbox-gl.css' rel='stylesheet' />
 	<script src="https://cdn.jsdelivr.net/npm/@turf/turf@5/turf.min.js"></script>
-
+	<script src="https://richtr.github.io/NoSleep.js/dist/NoSleep.min.js"></script>
 	<style>
 		*{
 			font-family: monospace;
@@ -51,7 +51,13 @@
 <div id='drawer'></div>
 
 <script>
-var spg = [ { "lng": "12,52511412", "lat": "55,66218479", "spørgsmål": "Haft en PUK maxi?", "1": "Dorte", "X": "Lone", "0": "Anne" }, { "id": 1, "lng": "12,52566934", "lat": "55,66092069", "spørgsmål": "Ejet en folkevogn bobbel?", "1": "Grethe", "X": "Mogens", "0": "Sven" }, { "id": 2, "lng": "12,52622724", "lat": "55,660376", "spørgsmål": "Har skudt med AK47?", "1": "Catalina", "X": "Henrik", "0": "Maria" }, { "id": 3, "lng": "12,52650619", "lat": "55,65927451", "spørgsmål": "Har studeret i udlandet?", "1": "Alexander", "X": "Ville", "0": "Line" }, { "id": 4, "lng": "12,52840519", "lat": "55,65945607", "spørgsmål": "Været FDF leder?", "1": "Sven", "X": "Dorte", "0": "Maria" }, { "id": 5, "lng": "12,52878606", "lat": "55,66020654", "spørgsmål": "Arbejdet på et hospital?", "1": "Dorte", "X": "Catalina", "0": "Lis" }, { "id": 6, "lng": "12,52925813", "lat": "55,65983131", "spørgsmål": "Har aldrig kørt med metroen? ", "1": "Bent", "X": "Vitus", "0": "Simon" }, { "id": 7, "lng": "12,52925813", "lat": "55,66047586", "spørgsmål": "Sælger børnetøj?", "1": "Simon", "X": "Maria", "0": "Lis" }, { "id": 8, "lng": "12,5287056", "lat": "55,66179217", "spørgsmål": "Kvart Nordmand? ", "1": "Lucia", "X": "Alexander", "0": "Simon" }, { "id": 9, "lng": "12,52774537", "lat": "55,66182848", "spørgsmål": "Spiller Golf? ", "1": "Lone", "X": "Anne", "0": "Ville" }, { "id": 10, "lng": "12,52673149", "lat": "55,66186177", "spørgsmål": "Aktiv/frivillig i et politisk parti?", "1": "Mogens", "X": "Ebbe", "0": "Henrik" }, { "id": 11, "lng": "12,52701581", "lat": "55,66136248", "spørgsmål": "Har fødselsdag i dag?", "1": "Sven", "X": "Henrik", "0": "Ida" }, { "id": 12, "lng": "12,52606228", "lat": "55,66227178", "spørgsmål": "Har været til DM i skills?", "1": "Sine", "X": "Line", "0": "Anne" } ]
+var noSleep = new NoSleep();
+document.addEventListener('click', function enableNoSleep() {
+  document.removeEventListener('click', enableNoSleep, false);
+  noSleep.enable();
+}, false);
+var spg = [ { "id": 0, "lng": "12,525114", "lat": "55,662185", "spørgsmål": "Haft en PUK maxi?", "1": "Dorte", "X": "Lone", "0": "Tino" }, { "id": 1, "lng": "12,525669", "lat": "55,660921", "spørgsmål": "Ejet en folkevogn bobbel?", "1": "Grethe", "X": "Mogens", "0": "Sven" }, { "id": 2, "lng": "12,526227", "lat": "55,660376", "spørgsmål": "Har skudt med AK47?", "1": "Catalina", "X": "Henrik", "0": "Maria" }, { "id": 3, "lng": "12,526506", "lat": "55,659275", "spørgsmål": "Har studeret i udlandet?", "1": "Alexander", "X": "Ville", "0": "Line" }, { "id": 4, "lng": "12,528405", "lat": "55,659456", "spørgsmål": "Været FDF leder?", "1": "Sven", "X": "Dorte", "0": "Maria" }, { "id": 5, "lng": "12,528786", "lat": "55,660207", "spørgsmål": "Arbejdet på et hospital?", "1": "Dorte", "X": "Catalina", "0": "Lis" }, { "id": 6, "lng": "12,529258", "lat": "55,659831", "spørgsmål": "Har aldrig kørt med metroen? ", "1": "Bent", "X": "Vitus", "0": "Minna" }, { "id": 7, "lng": "12,529258", "lat": "55,660476", "spørgsmål": "Sælger børnetøj?", "1": "Simon", "X": "Maria", "0": "Lis" }, { "id": 8, "lng": "12,528706", "lat": "55,661792", "spørgsmål": "Kvart Nordmand? ", "1": "Lucia", "X": "Alexander", "0": "Simon" }, { "id": 9, "lng": "12,527745", "lat": "55,661828", "spørgsmål": "Spiller Golf? ", "1": "Lone", "X": "Anne", "0": "Ville" }, { "id": 10, "lng": "12,526731", "lat": "55,661862", "spørgsmål": "Politisk aktiv", "1": "Mogens", "X": "Ebbe", "0": "Henrik" }, { "id": 11, "lng": "12,527016", "lat": "55,661362", "spørgsmål": "Har fødselsdag i dag?", "1": "Sven", "X": "Anne", "0": "Ida" }, { "id": 12, "lng": "12,526062", "lat": "55,662272", "spørgsmål": "Har været til DM i skills?", "1": "Sine", "X": "Tino", "0": "Bent" }, { "id": 13, "lng": "12,528523", "lat": "55,660960", "spørgsmål": "Har været kirketjener", "1": "Anne", "X": "Minna", "0": "Henrik" } ];
+
 var points = turf.featureCollection(
 	spg.map(spg=> turf.point(
 			[Number(spg.lng.replace(",",".")),Number(spg.lat.replace(",","."))],

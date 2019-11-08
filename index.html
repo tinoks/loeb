@@ -42,7 +42,9 @@
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			font-size: 28px;
 		}
+		h2 { font-size: 21px; }
     </style>
 </head>
 <body>
@@ -56,8 +58,7 @@ document.addEventListener('click', function enableNoSleep() {
   document.removeEventListener('click', enableNoSleep, false);
   noSleep.enable();
 }, false);
-var spg = [ { "id": 0, "lng": "12,525114", "lat": "55,662185", "spørgsmål": "Haft en PUK maxi?", "1": "Dorte", "X": "Lone", "0": "Tino" }, { "id": 1, "lng": "12,525669", "lat": "55,660921", "spørgsmål": "Ejet en folkevogn bobbel?", "1": "Grethe", "X": "Mogens", "0": "Sven" }, { "id": 2, "lng": "12,526227", "lat": "55,660376", "spørgsmål": "Har skudt med AK47?", "1": "Catalina", "X": "Henrik", "0": "Maria" }, { "id": 3, "lng": "12,526506", "lat": "55,659275", "spørgsmål": "Har studeret i udlandet?", "1": "Alexander", "X": "Ville", "0": "Line" }, { "id": 4, "lng": "12,528405", "lat": "55,659456", "spørgsmål": "Været FDF leder?", "1": "Sven", "X": "Dorte", "0": "Maria" }, { "id": 5, "lng": "12,528786", "lat": "55,660207", "spørgsmål": "Arbejdet på et hospital?", "1": "Dorte", "X": "Catalina", "0": "Lis" }, { "id": 6, "lng": "12,529258", "lat": "55,659831", "spørgsmål": "Har aldrig kørt med metroen? ", "1": "Bent", "X": "Vitus", "0": "Minna" }, { "id": 7, "lng": "12,529258", "lat": "55,660476", "spørgsmål": "Sælger børnetøj?", "1": "Simon", "X": "Maria", "0": "Lis" }, { "id": 8, "lng": "12,528706", "lat": "55,661792", "spørgsmål": "Kvart Nordmand? ", "1": "Lucia", "X": "Alexander", "0": "Simon" }, { "id": 9, "lng": "12,527745", "lat": "55,661828", "spørgsmål": "Spiller Golf? ", "1": "Lone", "X": "Anne", "0": "Ville" }, { "id": 10, "lng": "12,526731", "lat": "55,661862", "spørgsmål": "Politisk aktiv", "1": "Mogens", "X": "Ebbe", "0": "Henrik" }, { "id": 11, "lng": "12,527016", "lat": "55,661362", "spørgsmål": "Har fødselsdag i dag?", "1": "Sven", "X": "Anne", "0": "Ida" }, { "id": 12, "lng": "12,526062", "lat": "55,662272", "spørgsmål": "Har været til DM i skills?", "1": "Sine", "X": "Tino", "0": "Bent" }, { "id": 13, "lng": "12,528523", "lat": "55,660960", "spørgsmål": "Har været kirketjener", "1": "Anne", "X": "Minna", "0": "Henrik" } ];
-
+var spg = [ { "id": 0, "lng": "12,525114", "lat": "55,662185", "spørgsmål": "Haft en Puch Maxi?", "1": "Dorte", "X": "Lone", "0": "Tino" }, { "id": 1, "lng": "12,525669", "lat": "55,660921", "spørgsmål": "Ejet en VW bobbel?", "1": "Grethe", "X": "Mogens", "0": "Sven" }, { "id": 2, "lng": "12,526227", "lat": "55,660376", "spørgsmål": "Har skudt med AK47?", "1": "Catalina", "X": "Henrik", "0": "Maria" }, { "id": 3, "lng": "12,526506", "lat": "55,659275", "spørgsmål": "Har studeret i udlandet?", "1": "Alexander", "X": "Ville", "0": "Line" }, { "id": 4, "lng": "12,528405", "lat": "55,659456", "spørgsmål": "Været FDF leder?", "1": "Sven", "X": "Dorte", "0": "Maria" }, { "id": 5, "lng": "12,528786", "lat": "55,660207", "spørgsmål": "Arbejdet på et hospital?", "1": "Dorte", "X": "Catalina", "0": "Lis" }, { "id": 6, "lng": "12,529258", "lat": "55,659831", "spørgsmål": "Aldrig kørt med metroen? ", "1": "Bent", "X": "Vitus", "0": "Minna" }, { "id": 7, "lng": "12,529258", "lat": "55,660476", "spørgsmål": "Sælger børnetøj?", "1": "Simon", "X": "Maria", "0": "Lis" }, { "id": 8, "lng": "12,528706", "lat": "55,661792", "spørgsmål": "Kvart Nordmand? ", "1": "Lucia", "X": "Alexander", "0": "Simon" }, { "id": 9, "lng": "12,527745", "lat": "55,661828", "spørgsmål": "Spiller Golf? ", "1": "Lone", "X": "Anne", "0": "Ville" }, { "id": 10, "lng": "12,526731", "lat": "55,661862", "spørgsmål": "Politisk aktiv?", "1": "Mogens", "X": "Ebbe", "0": "Henrik" }, { "id": 11, "lng": "12,527016", "lat": "55,661362", "spørgsmål": "Har fødselsdag i dag?", "1": "Sven", "X": "Anne", "0": "Ida" }, { "id": 12, "lng": "12,526062", "lat": "55,662272", "spørgsmål": "Været til DM i skills?", "1": "Sine", "X": "Tino", "0": "Bent" }, { "id": 13, "lng": "12,528523", "lat": "55,660960", "spørgsmål": "Har været kirketjener?", "1": "Anne", "X": "Minna", "0": "Henrik" } ];
 var points = turf.featureCollection(
 	spg.map(spg=> turf.point(
 			[Number(spg.lng.replace(",",".")),Number(spg.lat.replace(",","."))],
@@ -88,7 +89,7 @@ const gps = new mapboxgl.GeolocateControl({
 
 	var hoveredStateId = null;
 	gps.on('geolocate', e=> showDialog([e.coords.longitude, e.coords.latitude]) );
-	map.on('click', e=>showDialog([e.lngLat.lng, e.lngLat.lat]) )
+	//map.on('click', e=>showDialog([e.lngLat.lng, e.lngLat.lat]) )
 
 	//map.on("move", _=> close() )
 	map.on('load', _=> {
@@ -132,9 +133,9 @@ const gps = new mapboxgl.GeolocateControl({
 		if(distance<20) {
 			const markup = `
 				<div class="list">
-					<h1>${nearest.properties.spørgsmål}</h1>
-					<h2>0:${nearest.properties["0"]}</h2>
-					<h2>X:${nearest.properties["X"]}</h2>
+					<h1>${nearest.properties.id}) ${nearest.properties.spørgsmål}</h1>
+					<h2>0:${nearest.properties["0"]}   </h2>
+					<h2>X:${nearest.properties["X"]}   </h2>
 					<h2>1:${nearest.properties["1"]}</h2>
 			 	</div>
 					`;
